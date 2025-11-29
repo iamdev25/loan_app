@@ -46,14 +46,14 @@ jobs:
     - name: Decode keystore
       run: |
         mkdir -p android/app
-        echo "$KEYSTORE_BASE64" | base64 --decode > android/app/my-release-key.jks
+        echo "$KEYSTORE_BASE64" | base64 --decode > $GITHUB_WORKSPACE/android/app/my-release-key.jks
 
     # 9️⃣ Build signed APK
     - name: Build signed APK
       run: |
-        cd android
-        ./gradlew assembleRelease \
-          -Pandroid.injected.signing.store.file=app/my-release-key.jks \
+       cd android
+       ./gradlew assembleRelease \
+          -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/android/app/my-release-key.jks \
           -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
           -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
           -Pandroid.injected.signing.key.password=$KEY_PASSWORD
