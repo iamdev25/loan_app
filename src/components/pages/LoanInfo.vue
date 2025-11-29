@@ -90,4 +90,8 @@ const balance = computed(() => {
 function goAddEntry() {
   router.push('/loan-entry')
 }
+
+function back(){
+    router.push('/loan-entry');
+}
 </script>
