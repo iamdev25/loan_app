@@ -2,7 +2,7 @@ name: Android Build
 
 on:
   push:
-    branches: [ main ]  # main branch এ push হলে trigger হবে
+    branches: [ main ]
 
 jobs:
   build:
@@ -13,17 +13,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # 2️⃣ Install Node 22
+    # 2️⃣ Setup Node.js 22
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: 22
 
-    # 3️⃣ Install project dependencies
+    # 3️⃣ Install npm dependencies
     - name: Install npm packages
       run: npm install
 
-    # 4️⃣ Build Vue project (dist folder)
+    # 4️⃣ Build Vue project
     - name: Build Vue project
       run: npm run build
 
@@ -35,14 +35,20 @@ jobs:
     - name: Sync Capacitor
       run: npx cap sync android
 
-    # 7️⃣ Setup JDK 17
+    # 7️⃣ Setup JDK 21
     - name: Setup Java
       uses: actions/setup-java@v3
       with:
         distribution: 'zulu'
         java-version: 21
 
-      # Build signed APK
+    # 8️⃣ Decode keystore from secret
+    - name: Decode keystore
+      run: |
+        mkdir -p android/app
+        echo "$KEYSTORE_BASE64" | base64 --decode > android/app/my-release-key.jks
+
+    # 9️⃣ Build signed APK
     - name: Build signed APK
       run: |
         cd android
@@ -52,7 +58,7 @@ jobs:
           -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
           -Pandroid.injected.signing.key.password=$KEY_PASSWORD
 
-    # Upload signed APK artifact
+    # 🔟 Upload signed APK artifact
     - uses: actions/upload-artifact@v4
       with:
         name: app-release
