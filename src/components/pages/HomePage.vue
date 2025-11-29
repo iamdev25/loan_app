@@ -24,6 +24,15 @@
           </ion-button>
         </div>
 
+        <div class="mt-8">
+          <ion-button @click="goSetting" class="primary-action-btn" shape="round" size="large">
+            <div class="flex items-center justify-center space-x-3">
+              <span class="font-semibold text-sm"> Setting </span>
+              <span><ion-icon :icon="arrowForwardCircle"></ion-icon></span>
+            </div>
+          </ion-button>
+        </div>
+
         <!-- Additional Info -->
         <div class="mt-12 text-center max-w-md">
           <p class="text-gray-500 text-sm">
@@ -43,6 +52,9 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
+function goSetting() {
+  router.push('/setting')
+}
 function goStart() {
   router.push('/loan-info')
 }

@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar color="primary">
         <div class="flex justify-start items-center pl-4 space-x-6">
-            <Link :href="router.back()" > <span class="font-semibold"><ion-icon :icon="arrowBack"></ion-icon></span></Link>
+            <span class="font-semibold" @click="goBack()"><ion-icon :icon="arrowBack"></ion-icon></span>
           <ion-title>Add Loan Entry</ion-title>
         </div>
       </ion-toolbar>
@@ -82,5 +82,9 @@ function saveEntry() {
   setTimeout(() => {
     router.push('/loan-info')
   }, 1000)
+}
+
+function goBack(){
+    router.push('/loan-info');
 }
 </script>

@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar color="primary">
         <div class="flex justify-start items-center pl-4 space-x-6">
-          <span class="font-semibold" @click="back()"><ion-icon :icon="arrowBack"></ion-icon></span>
+          <span class="font-semibold" @click="goBack()"><ion-icon :icon="arrowBack"></ion-icon></span>
           <ion-title>Loan Summary</ion-title>
         </div>
       </ion-toolbar>
@@ -91,7 +91,7 @@ function goAddEntry() {
   router.push('/loan-entry')
 }
 
-function back(){
-    router.push('/loan-entry');
+function goBack(){
+    router.push('/');
 }
 </script>
