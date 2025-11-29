@@ -2,38 +2,45 @@
   <ion-page>
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>Add Loan Entry</ion-title>
+        <div class="flex justify-start items-center pl-4 space-x-6">
+          <span class="font-semibold" @click="back()"><ion-icon :icon="arrowBack"></ion-icon></span>
+          <ion-title>Add Loan Entry</ion-title>
+        </div>
       </ion-toolbar>
     </ion-header>
 
     <ion-content class="ion-padding">
-      <ion-item>
-        <ion-label position="floating">Person Name</ion-label>
-        <ion-input v-model="name"></ion-input>
-      </ion-item>
+      <div class="p-6 flex flex-col space-y-4">
+        <ion-item>
+          <ion-input v-model="name" label-placement="stacked" label="Name" placeholder="Jhon doe"></ion-input>
+        </ion-item>
 
-      <ion-item class="mt-3">
-        <ion-label position="floating">Amount (Tk)</ion-label>
-        <ion-input type="number" v-model="amount"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-input v-model="amount" type="number" label-placement="stacked" label="Amount (TK)" placeholder="100"></ion-input>
+        </ion-item>
 
-      <ion-item class="mt-3">
-        <ion-label>Type</ion-label>
-        <ion-select v-model="type">
-          <ion-select-option value="given">I Gave</ion-select-option>
-          <ion-select-option value="received">I Received</ion-select-option>
-        </ion-select>
-      </ion-item>
+        <ion-item>
+          <ion-select label-placement="stacked" label="Loan Type" value="">
+            <ion-select-option value="">Select</ion-select-option>
+            <ion-select-option value="give">Given</ion-select-option>
+            <ion-select-option value="refund">Refund</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-      <ion-button expand="block" class="mt-5" @click="saveEntry"> Save </ion-button>
+    
+        <ion-button expand="block" class="mt-6 flex justify-center items-center space-x-2" size="large" @click="saveEntry">
+            <ion-icon class="w-6 h-6" :icon="saveOutline"></ion-icon> 
+            <span> Save </span>
+        </ion-button>
 
-      <ion-toast
-        :is-open="toastOpen"
-        message="Saved Successfully!"
-        duration="1500"
-        color="success"
-        @didDismiss="toastOpen = false"
-      ></ion-toast>
+        <ion-toast
+          :is-open="toastOpen"
+          message="Saved Successfully!"
+          duration="1500"
+          color="success"
+          @didDismiss="toastOpen = false"
+        ></ion-toast>
+      </div>
     </ion-content>
   </ion-page>
 </template>
@@ -46,13 +53,13 @@ import {
   IonTitle,
   IonContent,
   IonItem,
-  IonLabel,
   IonInput,
   IonButton,
   IonToast,
   IonSelect,
   IonSelectOption,
 } from '@ionic/vue'
+import { arrowBack, saveOutline } from 'ionicons/icons'
 
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -75,5 +82,9 @@ function saveEntry() {
   setTimeout(() => {
     router.push('/loan-info')
   }, 1000)
+}
+
+function back(){
+     router.push('/loan-info')
 }
 </script>
