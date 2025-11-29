@@ -34,3 +34,19 @@ coverage
 
 # Vitest
 __screenshots__/
+
+dist/
+
+# Capacitor native folders (recreateable)
+android/
+ios/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db

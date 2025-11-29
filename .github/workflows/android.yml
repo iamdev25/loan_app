@@ -1,39 +1,55 @@
+name: Android Build
+
+on:
+  push:
+    branches: [ main ]  # main branch এ push হলে trigger হবে
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    # 1️⃣ Checkout code
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-    - name: Install Node
+    # 2️⃣ Install Node 22
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: 22
 
-    - run: npm install
+    # 3️⃣ Install project dependencies
+    - name: Install npm packages
+      run: npm install
 
-    - name: Build Vue Project
+    # 4️⃣ Build Vue project (dist folder)
+    - name: Build Vue project
       run: npm run build
 
-    # Add Android platform in CI
-    - name: Add Android Platform
+    # 5️⃣ Add Android platform if not exists
+    - name: Add Android platform
       run: npx cap add android || echo "Android platform already added"
 
+    # 6️⃣ Sync Capacitor
     - name: Sync Capacitor
       run: npx cap sync android
 
-    - name: Setup JDK
+    # 7️⃣ Setup JDK 17
+    - name: Setup Java
       uses: actions/setup-java@v3
       with:
         distribution: 'zulu'
         java-version: 17
 
-    - name: Build APK
+    # 8️⃣ Build APK
+    - name: Build Android APK
       run: |
         cd android
         ./gradlew assembleRelease
 
-    - name: Upload output
+    # 9️⃣ Upload APK artifact
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-release
